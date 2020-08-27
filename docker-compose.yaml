@@ -1,0 +1,127 @@
+version: "3"
+
+volumes:
+  acs-influxdb-vol:
+  acs-mongo-vol:
+  acs-mongo-optvol:
+  acs-grafana-optvol:
+  acs-genieacs-optvol:
+
+networks:
+  acs-net:
+
+services:
+  mongo:
+    image: mongo:4.0 
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=adminuser
+      - MONGO_INITDB_ROOT_PASSWORD=adminpass
+      - MONGO_INITDB_DATABASE=genieacs
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/var/log/mongodb
+    volumes:
+      - acs-mongo-vol:/data/db
+      - acs-mongo-optvol:/data/configdb
+    ports: 
+      - "27017:27017"
+    networks:
+      - acs-net
+    restart: always
+    privileged: false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  genieacs:
+    depends_on:
+      - 'mongo'
+    image: drumsergio/genieacs:local
+    environment:
+      - GENIEACS_UI_JWT_SECRET=secret
+      - GENIEACS_MONGODB_CONNECTION_URL=mongodb://adminuser:adminpass@mongo:27017/genieacs?authSource=admin
+      - GENIEACS_CWMP_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-cmwp-access.log
+      - GENIEACS_NBI_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-nbi-access.log
+      - GENIEACS_FS_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-fs-access.log
+      - GENIEACS_UI_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-ui-access.log
+      - GENIEACS_DEBUG_FILE=/var/log/genieacs/genieacs-debug.yaml
+      - GENIEACS_EXT_DIR=/opt/genieacs/ext
+      - GENIEACS_UI_PORT=3000
+    ports:
+      - "7547:7547"
+      - "7557:7557"
+      - "7567:7567"
+      - "3001:3000"
+    volumes:
+      - acs-genieacs-optvol:/opt
+      - ./ext:/opt/genieacs/ext/
+    networks:
+      - acs-net
+    restart: always
+    privileged: false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  telegraf:
+    image: telegraf
+    networks:
+      acs-net:
+        aliases:
+          - telegraf
+    ports:
+      - "9111:9111"
+    volumes:
+      - ./config/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+    restart: always
+    privileged: false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  influxdb:
+    image: influxdb:1.7.4
+    networks:
+      acs-net:
+        aliases:
+          - influxdb
+    volumes:
+      - "acs-influxdb-vol:/var/lib/influxdb"
+    environment:
+     - INFLUXDB_DB=genieacs
+     - INFLUXDB_ADMIN_ENABLED=true
+     - INFLUXDB_HTTP_AUTH_ENABLED=true
+     - INFLUXDB_ADMIN_USER=adminuser
+     - INFLUXDB_ADMIN_PASSWORD=adminpass
+    privileged: false
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  grafana:
+    image: ketitik/grafana:dev
+    networks:
+      acs-net:
+        aliases:
+          - grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - acs-grafana-optvol:/var/lib/grafana
+    environment:
+      - "GF_SECURITY_ADMIN_PASSWORD=adminpass"
+    privileged: false
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
