@@ -15,19 +15,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Built With
 
-* [Grafana](http://www.grafana.com) for Data visualization.
-* [InfluxDB](https://www.influxdata.com/) for Database.
-* [Telegraf](https://github.com/influxdata/telegraf/tree/master/plugins) for Metric Collecting Agent.
-* [RouterOS](https://mikrotik.com/) for Monitored Router.
-* [VirtualBox](https://www.virtualbox.org/) for Router Visualization.
-* [Docker](https://www.docker.com) for Container Virtualization.
+* [TIG-Stack for Monitoring RouterOS](https://github.com/revawiki/TIG-Stack-for-Monitoring-RouterOS-using-HTTP-Listener) for Customized TIG-Stack.
+* [RouterOS with TR069](https://mikrotik.com/) for CPE Device.
+* [Docker](https://www.docker.com/) for Container Virtualization.
 
 ## Credits
 
-* [Jitsi-Monitoring](https://github.com/haidlir/jitsi-monitoring) by Haidlir Naqvi.
-* [Telegraf HTTP Listener plugin use case](https://thenewstack.io/how-i-created-a-telegraf-plugin-to-monitor-solar-panels/) by Julius Marozas.
-* [Virtualbox set-up for docker on host connectivity](http://pinter.org/archives/7719) by Lazlo Pinter
-
+* [ACS-Stack](https://github.com/haidlir/ACS-Stack) by Haidlir Naqvi.
+* [RouterOS TR069 Data Model](https://wiki.mikrotik.com/tr069ref/current.html) by Mikrotik.
 
 ##### Question/Inquiries
 If you have any question regarding the repo, feel free to e-mail me at reva.wiki@gmail.com. Thank you.
