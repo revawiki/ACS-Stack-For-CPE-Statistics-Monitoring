@@ -23,7 +23,7 @@ $ docker build -f GenieACS.dockerfile . -t drumsergio/genieacs:local
 $ git clone https://github.com/revawiki/ACS-Stack-For-CPE-Statistics-Monitoring
 ```
 
-3. Go to the cloned directory, and execute the bashfile.
+4. Go to the cloned directory, and execute the bashfile.
 ```
 $ ./up.sh
 ```
