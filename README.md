@@ -35,7 +35,9 @@ $ ./up.sh
 
 3. Back to GenieACS web interface, overwrite the default provision script using the script provided [here](https://github.com/revawiki/ACS-Stack-For-CPE-Statistics-Monitoring/blob/master/script/provision-script.js).
 
-4. [Restart](https://docs.docker.com/engine/reference/commandline/restart/) the GenieACS docker service 
+4. [Restart](https://docs.docker.com/engine/reference/commandline/restart/) the GenieACS docker service.
+
+5. Access the visualization dashboard via (http://localhost:3000).
 
 #### Expected visual
 ![Grafana-Dashboard](https://raw.githubusercontent.com/revawiki/ACS-Stack-For-CPE-Statistics-Monitoring/master/img/cpe-visualization.png)
