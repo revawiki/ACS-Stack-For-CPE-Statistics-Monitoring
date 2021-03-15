@@ -20,7 +20,7 @@ $ docker build -f GenieACS.dockerfile . -t drumsergio/genieacs:local
 
 3. Clone this repository into your machine.
 ```
-$ git clone https://github.com/revawiki/ACS-Stack-For-CPE-Statistics-Monitoring
+$ git clone https://github.com/revawiki/ACS-Stack-For-CPE-Statistics-Monitoring.git
 ```
 
 4. Go to the cloned directory, and execute the bashfile.
